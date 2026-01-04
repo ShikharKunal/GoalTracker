@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { format } from 'date-fns';
 import Button from '@/components/ui/Button';
@@ -20,12 +20,7 @@ export default function EditGoalPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchGoal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [goalId]);
-
-  const fetchGoal = async () => {
+  const fetchGoal = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -52,7 +47,11 @@ export default function EditGoalPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [goalId, router]);
+
+  useEffect(() => {
+    fetchGoal();
+  }, [fetchGoal]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

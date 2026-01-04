@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import Card from '@/components/ui/Card';
@@ -22,20 +22,7 @@ export default function GoalProgressPage() {
   const [editingLog, setEditingLog] = useState<ProgressLog | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchData();
-    
-    // Check if URL has ?log=true parameter
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('log') === 'true') {
-        setShowLogger(true);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [goalId]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -69,7 +56,19 @@ export default function GoalProgressPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [goalId, router]);
+
+  useEffect(() => {
+    fetchData();
+    
+    // Check if URL has ?log=true parameter
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('log') === 'true') {
+        setShowLogger(true);
+      }
+    }
+  }, [fetchData]);
 
   const handleDelete = async (logId: string) => {
     if (!confirm('Are you sure you want to delete this progress entry?')) {
