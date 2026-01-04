@@ -32,6 +32,7 @@ export default function GoalProgressPage() {
         setShowLogger(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goalId]);
 
   const fetchData = async () => {

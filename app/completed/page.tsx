@@ -153,7 +153,7 @@ export default function CompletedGoalsPage() {
         {goals.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-sm font-light text-gray-600 mb-8">
-              You haven't completed any goals yet
+              You haven&apos;t completed any goals yet
             </p>
             <Link href="/">
               <Button>View Active Goals</Button>

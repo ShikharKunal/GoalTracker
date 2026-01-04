@@ -22,6 +22,7 @@ export default function EditGoalPage() {
 
   useEffect(() => {
     fetchGoal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goalId]);
 
   const fetchGoal = async () => {
