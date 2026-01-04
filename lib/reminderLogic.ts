@@ -3,18 +3,20 @@ import { differenceInDays, addDays, isBefore, startOfDay } from 'date-fns';
 /**
  * Calculates the next reminder date based on the goal's duration
  * 
- * Rules:
+ * Default Rules (if reminder_interval_days is null):
  * - Total Duration < 1 month: Reminder every 3 days
  * - Total Duration 1 month - 6 months: Reminder every 7 days (1 week)
  * - Total Duration > 6 months: Reminder every 14 days (2 weeks)
  * 
  * @param startDate - The start date of the goal
  * @param targetEndDate - The target end date of the goal
+ * @param customIntervalDays - Optional custom reminder interval in days (null = use default)
  * @returns The next reminder date
  */
 export function calculateNextReminderDate(
   startDate: Date,
-  targetEndDate: Date
+  targetEndDate: Date,
+  customIntervalDays: number | null = null
 ): Date {
   const today = startOfDay(new Date());
   const start = startOfDay(startDate);
@@ -23,18 +25,24 @@ export function calculateNextReminderDate(
   // Calculate total duration in days
   const totalDurationDays = differenceInDays(end, start);
   
-  // Determine reminder interval based on duration
+  // Determine reminder interval - use custom if provided, otherwise use default logic
   let reminderIntervalDays: number;
   
-  if (totalDurationDays < 30) {
-    // Less than 1 month: every 3 days
-    reminderIntervalDays = 3;
-  } else if (totalDurationDays <= 180) {
-    // 1 month to 6 months: every 7 days
-    reminderIntervalDays = 7;
+  if (customIntervalDays !== null && customIntervalDays > 0) {
+    // Use custom interval
+    reminderIntervalDays = customIntervalDays;
   } else {
-    // More than 6 months: every 14 days
-    reminderIntervalDays = 14;
+    // Use default logic based on duration
+    if (totalDurationDays < 30) {
+      // Less than 1 month: every 3 days
+      reminderIntervalDays = 3;
+    } else if (totalDurationDays <= 180) {
+      // 1 month to 6 months: every 7 days
+      reminderIntervalDays = 7;
+    } else {
+      // More than 6 months: every 14 days
+      reminderIntervalDays = 14;
+    }
   }
   
   // Calculate next reminder date
@@ -71,9 +79,9 @@ export function calculateNextReminderDate(
 }
 
 /**
- * Gets the reminder interval in days for a given goal duration
+ * Gets the default reminder interval in days for a given goal duration
  */
-export function getReminderInterval(totalDurationDays: number): number {
+export function getDefaultReminderInterval(totalDurationDays: number): number {
   if (totalDurationDays < 30) {
     return 3;
   } else if (totalDurationDays <= 180) {
@@ -81,5 +89,18 @@ export function getReminderInterval(totalDurationDays: number): number {
   } else {
     return 14;
   }
+}
+
+/**
+ * Gets the reminder interval in days (custom or default)
+ */
+export function getReminderInterval(
+  totalDurationDays: number,
+  customIntervalDays: number | null = null
+): number {
+  if (customIntervalDays !== null && customIntervalDays > 0) {
+    return customIntervalDays;
+  }
+  return getDefaultReminderInterval(totalDurationDays);
 }
 

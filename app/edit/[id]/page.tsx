@@ -16,6 +16,7 @@ export default function EditGoalPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [targetEndDate, setTargetEndDate] = useState('');
+  const [reminderIntervalDays, setReminderIntervalDays] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,6 +42,7 @@ export default function EditGoalPage() {
         setTitle(data.title);
         setDescription(data.description || '');
         setTargetEndDate(format(new Date(data.target_end_date), 'yyyy-MM-dd'));
+        setReminderIntervalDays(data.reminder_interval_days?.toString() || '');
       }
     } catch (err: any) {
       setError(err.message || 'Failed to load goal');
@@ -73,15 +75,36 @@ export default function EditGoalPage() {
         throw new Error('Target end date is required');
       }
 
-      const startDate = new Date();
+      // Get original start date from fetched data
+      const { data: originalData } = await supabase
+        .from('goals')
+        .select('start_date')
+        .eq('id', goalId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (!originalData) {
+        throw new Error('Goal not found');
+      }
+
+      const startDate = new Date(originalData.start_date);
       const endDate = new Date(targetEndDate);
 
       if (endDate <= startDate) {
-        throw new Error('Target end date must be in the future');
+        throw new Error('Target end date must be after start date');
+      }
+
+      // Parse reminder interval (null = use default)
+      const reminderInterval = reminderIntervalDays.trim() 
+        ? parseInt(reminderIntervalDays.trim()) 
+        : null;
+      
+      if (reminderInterval !== null && (isNaN(reminderInterval) || reminderInterval < 1)) {
+        throw new Error('Reminder interval must be at least 1 day');
       }
 
       // Recalculate next reminder date
-      const nextReminderDate = calculateNextReminderDate(startDate, endDate);
+      const nextReminderDate = calculateNextReminderDate(startDate, endDate, reminderInterval);
 
       const { error: updateError } = await supabase
         .from('goals')
@@ -90,6 +113,7 @@ export default function EditGoalPage() {
           description: description.trim() || null,
           target_end_date: endDate.toISOString(),
           next_reminder_date: nextReminderDate.toISOString(),
+          reminder_interval_days: reminderInterval,
           updated_at: new Date().toISOString(),
         })
         .eq('id', goalId)
@@ -156,6 +180,23 @@ export default function EditGoalPage() {
             min={today}
             required
           />
+
+          <div className="w-full">
+            <label className="block text-sm font-light text-gray-700 dark:text-gray-300 mb-1">
+              Reminder Frequency (days) - Optional
+            </label>
+            <input
+              type="number"
+              min="1"
+              value={reminderIntervalDays}
+              onChange={(e) => setReminderIntervalDays(e.target.value)}
+              placeholder="Leave empty for automatic (based on goal duration)"
+              className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+            />
+            <p className="text-xs font-light text-gray-500 dark:text-gray-500 mt-1">
+              Default: 3 days (short-term), 7 days (medium), 14 days (long-term)
+            </p>
+          </div>
 
           {error && (
             <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">

@@ -62,7 +62,7 @@ export default function NotificationSettings() {
 
   if (!isSupported) {
     return (
-      <div className="text-xs font-light text-gray-600">
+      <div className="text-xs font-light text-gray-600 dark:text-gray-400">
         Notifications not supported in this browser
       </div>
     );
@@ -70,7 +70,7 @@ export default function NotificationSettings() {
 
   if (permission === 'granted' && isRegistered) {
     return (
-      <div className="text-xs font-light text-gray-600">
+      <div className="text-xs font-light text-gray-600 dark:text-gray-400">
         Notifications enabled
       </div>
     );
@@ -86,7 +86,7 @@ export default function NotificationSettings() {
         {isSettingUp ? 'Enabling...' : 'Enable Notifications'}
       </Button>
       {message && (
-        <div className="text-xs font-light text-gray-600">
+        <div className="text-xs font-light text-gray-600 dark:text-gray-400">
           {message}
         </div>
       )}

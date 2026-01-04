@@ -6,6 +6,7 @@ export interface Goal {
   start_date: string; // ISO timestamp string
   target_end_date: string; // ISO timestamp string
   next_reminder_date: string; // ISO timestamp string
+  reminder_interval_days: number | null; // Custom reminder interval, null = use default
   is_active: boolean;
   created_at?: string; // ISO timestamp string
   updated_at?: string; // ISO timestamp string
@@ -18,6 +19,7 @@ export interface GoalInsert {
   start_date: string;
   target_end_date: string;
   next_reminder_date: string;
+  reminder_interval_days?: number | null;
   is_active: boolean;
 }
 

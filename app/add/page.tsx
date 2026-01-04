@@ -13,6 +13,7 @@ export default function AddGoalPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [targetEndDate, setTargetEndDate] = useState('');
+  const [reminderIntervalDays, setReminderIntervalDays] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,8 +47,17 @@ export default function AddGoalPage() {
         throw new Error('Target end date must be in the future');
       }
 
+      // Parse reminder interval (null = use default)
+      const reminderInterval = reminderIntervalDays.trim() 
+        ? parseInt(reminderIntervalDays.trim()) 
+        : null;
+      
+      if (reminderInterval !== null && (isNaN(reminderInterval) || reminderInterval < 1)) {
+        throw new Error('Reminder interval must be at least 1 day');
+      }
+
       // Calculate next reminder date
-      const nextReminderDate = calculateNextReminderDate(startDate, endDate);
+      const nextReminderDate = calculateNextReminderDate(startDate, endDate, reminderInterval);
 
       // Insert goal into Supabase
       const { error: insertError } = await supabase
@@ -59,6 +69,7 @@ export default function AddGoalPage() {
           start_date: startDate.toISOString(),
           target_end_date: endDate.toISOString(),
           next_reminder_date: nextReminderDate.toISOString(),
+          reminder_interval_days: reminderInterval,
           is_active: true,
         } as any);
 
@@ -119,6 +130,23 @@ export default function AddGoalPage() {
             min={today}
             required
           />
+
+          <div className="w-full">
+            <label className="block text-sm font-light text-gray-700 dark:text-gray-300 mb-1">
+              Reminder Frequency (days) - Optional
+            </label>
+            <input
+              type="number"
+              min="1"
+              value={reminderIntervalDays}
+              onChange={(e) => setReminderIntervalDays(e.target.value)}
+              placeholder="Leave empty for automatic (based on goal duration)"
+              className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+            />
+            <p className="text-xs font-light text-gray-500 dark:text-gray-500 mt-1">
+              Default: 3 days (short-term), 7 days (medium), 14 days (long-term)
+            </p>
+          </div>
 
           {error && (
             <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">

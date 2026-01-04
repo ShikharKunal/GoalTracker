@@ -7,10 +7,22 @@ CREATE TABLE IF NOT EXISTS goals (
   start_date TIMESTAMPTZ NOT NULL,
   target_end_date TIMESTAMPTZ NOT NULL,
   next_reminder_date TIMESTAMPTZ NOT NULL,
+  reminder_interval_days INTEGER, -- NULL means use default logic based on duration
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Add reminder_interval_days column if it doesn't exist (for existing databases)
+DO $$ 
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'goals' AND column_name = 'reminder_interval_days'
+  ) THEN
+    ALTER TABLE goals ADD COLUMN reminder_interval_days INTEGER;
+  END IF;
+END $$;
 
 -- Create push_subscriptions table
 CREATE TABLE IF NOT EXISTS push_subscriptions (
