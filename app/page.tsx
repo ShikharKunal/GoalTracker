@@ -9,6 +9,7 @@ import Button from '@/components/ui/Button';
 import AuthButton from '@/components/AuthButton';
 import NotificationSettings from '@/components/NotificationSettings';
 import PieChart from '@/components/PieChart';
+import ThemeToggle from '@/components/ThemeToggle';
 import { supabase } from '@/lib/supabase';
 import type { Goal, ProgressLog } from '@/types';
 
@@ -111,68 +112,78 @@ export default function HomePage() {
 
   const fetchGoals = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        setError('You must be logged in to view goals');
-        setLoading(false);
-        return;
-      }
+      // Add timeout for mobile networks
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout - please check your connection')), 15000)
+      );
 
-      // Parallelize all data fetching for better performance
-      const [goalsResult, countResult, logsResult] = await Promise.all([
-        // Fetch active goals
-        supabase
-          .from('goals')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('is_active', true)
-          .order('target_end_date', { ascending: true }),
+      const fetchPromise = (async () => {
+        const { data: { user } } = await supabase.auth.getUser();
         
-        // Fetch completed goals count
-        supabase
-          .from('goals')
-          .select('*', { count: 'exact', head: true })
-          .eq('user_id', user.id)
-          .eq('is_active', false),
-        
-        // Pre-fetch progress logs (we'll filter after)
-        supabase
-          .from('progress_logs')
-          .select('goal_id, percentage, logged_at')
-          .eq('user_id', user.id)
-          .order('logged_at', { ascending: false })
-          .limit(50) // Only get recent logs
-      ]);
-
-      if (goalsResult.error) {
-        throw goalsResult.error;
-      }
-
-      const goals = goalsResult.data || [];
-      setGoals(goals);
-
-      if (!countResult.error && countResult.count !== null) {
-        setCompletedCount(countResult.count);
-      }
-
-      // Process progress logs efficiently
-      if (goals.length > 0 && logsResult.data) {
-        const goalIds = new Set(goals.map(g => g.id));
-        const latestLogs: Record<string, ProgressLog> = {};
-        
-        // Only process logs for goals we have
-        for (const log of logsResult.data) {
-          if (goalIds.has(log.goal_id) && !latestLogs[log.goal_id]) {
-            latestLogs[log.goal_id] = log as ProgressLog;
-          }
-          // Early exit optimization
-          if (Object.keys(latestLogs).length === goalIds.size) break;
+        if (!user) {
+          setError('You must be logged in to view goals');
+          setLoading(false);
+          return;
         }
-        setProgressLogs(latestLogs);
-      }
+
+        // Parallelize all data fetching for better performance
+        const [goalsResult, countResult, logsResult] = await Promise.all([
+          // Fetch active goals
+          supabase
+            .from('goals')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('is_active', true)
+            .order('target_end_date', { ascending: true }),
+          
+          // Fetch completed goals count
+          supabase
+            .from('goals')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id)
+            .eq('is_active', false),
+          
+          // Pre-fetch progress logs (we'll filter after)
+          supabase
+            .from('progress_logs')
+            .select('goal_id, percentage, logged_at')
+            .eq('user_id', user.id)
+            .order('logged_at', { ascending: false })
+            .limit(50) // Only get recent logs
+        ]);
+
+        if (goalsResult.error) {
+          throw goalsResult.error;
+        }
+
+        const goals = goalsResult.data || [];
+        setGoals(goals);
+
+        if (!countResult.error && countResult.count !== null) {
+          setCompletedCount(countResult.count);
+        }
+
+        // Process progress logs efficiently
+        if (goals.length > 0 && logsResult.data) {
+          const goalIds = new Set(goals.map(g => g.id));
+          const latestLogs: Record<string, ProgressLog> = {};
+          
+          // Only process logs for goals we have
+          for (const log of logsResult.data) {
+            if (goalIds.has(log.goal_id) && !latestLogs[log.goal_id]) {
+              latestLogs[log.goal_id] = log as ProgressLog;
+            }
+            // Early exit optimization
+            if (Object.keys(latestLogs).length === goalIds.size) break;
+          }
+          setProgressLogs(latestLogs);
+        }
+      })();
+
+      await Promise.race([fetchPromise, timeoutPromise]);
     } catch (err: any) {
-      setError(err.message || 'Failed to fetch goals');
+      console.error('Error fetching goals:', err);
+      setError(err.message || 'Failed to fetch goals. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -242,17 +253,27 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <p className="text-sm font-light text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center">
+        <p className="text-sm font-light text-gray-600 dark:text-gray-400 mb-4">Loading...</p>
+        <p className="text-xs font-light text-gray-400 dark:text-gray-600">If this takes too long, check your connection</p>
+        <button
+          onClick={() => {
+            setLoading(false);
+            setError('Loading cancelled. Please refresh the page.');
+          }}
+          className="mt-4 text-xs font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors underline"
+        >
+          Cancel
+        </button>
       </div>
     );
   }
 
   if (error && error.includes('logged in')) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-black">
         <div className="max-w-md mx-auto px-6 py-12">
-          <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2 mb-8">
+          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
             {error}
           </div>
           <Link href="/login">
@@ -265,9 +286,9 @@ export default function HomePage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-black">
         <div className="max-w-md mx-auto px-6 py-12">
-          <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2 mb-8">
+          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
             {error}
           </div>
           <Button onClick={fetchGoals}>Retry</Button>
@@ -277,20 +298,23 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-2xl font-light text-black mb-2">Goals</h1>
-              <p className="text-sm font-light text-gray-600">
+              <h1 className="text-2xl font-light text-black dark:text-white mb-2">Goals</h1>
+              <p className="text-sm font-light text-gray-600 dark:text-gray-400">
                 {goals.length === 0 
                   ? 'No active goals yet' 
                   : `${goals.length} active goal${goals.length !== 1 ? 's' : ''}`
                 }
               </p>
             </div>
-            <AuthButton />
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <AuthButton />
+            </div>
           </div>
           <div className="flex justify-between items-center mb-4">
             <div className="flex justify-end flex-1">
@@ -305,7 +329,7 @@ export default function HomePage() {
           {completedCount > 0 && (
             <div className="mb-4">
               <Link href="/completed">
-                <button className="text-sm font-light text-gray-600 hover:text-black transition-colors">
+                <button className="text-sm font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
                   View {completedCount} completed goal{completedCount !== 1 ? 's' : ''} →
                 </button>
               </Link>
@@ -315,7 +339,7 @@ export default function HomePage() {
 
         {goals.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-sm font-light text-gray-600 mb-8">
+            <p className="text-sm font-light text-gray-600 dark:text-gray-400 mb-8">
               Start tracking your long-term goals
             </p>
             <Link href="/add">
@@ -332,13 +356,13 @@ export default function HomePage() {
                 <Card key={goal.id}>
                   <div className="space-y-3">
                     <div className="flex justify-between items-start">
-                      <h2 className="text-lg font-light text-black flex-1">
+                      <h2 className="text-lg font-light text-black dark:text-white flex-1">
                         {goal.title}
                       </h2>
                       <div className="flex gap-2 ml-4">
                       <Link href={`/edit/${goal.id}`} prefetch={true}>
                         <button
-                          className="text-xs font-light text-gray-600 hover:text-black transition-colors"
+                          className="text-xs font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                           title="Edit goal"
                         >
                           Edit
@@ -346,14 +370,14 @@ export default function HomePage() {
                       </Link>
                         <button
                           onClick={() => handleComplete(goal.id)}
-                          className="text-xs font-light text-gray-600 hover:text-black transition-colors"
+                          className="text-xs font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                           title="Mark as complete"
                         >
                           Complete
                         </button>
                         <button
                           onClick={() => handleDelete(goal.id)}
-                          className="text-xs font-light text-gray-600 hover:text-red-600 transition-colors"
+                          className="text-xs font-light text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
                           title="Delete goal"
                         >
                           Delete
@@ -362,7 +386,7 @@ export default function HomePage() {
                     </div>
 
                     {goal.description && (
-                      <p className="text-sm font-light text-gray-600">
+                      <p className="text-sm font-light text-gray-600 dark:text-gray-400">
                         {goal.description}
                       </p>
                     )}
@@ -370,25 +394,25 @@ export default function HomePage() {
                     {/* Progress indicator */}
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm font-light text-gray-600">Progress</span>
-                        <span className="text-sm font-light text-black">{currentProgress}%</span>
+                        <span className="text-sm font-light text-gray-600 dark:text-gray-400">Progress</span>
+                        <span className="text-sm font-light text-black dark:text-white">{currentProgress}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 h-1">
+                      <div className="w-full bg-gray-200 dark:bg-gray-800 h-1">
                         <div 
-                          className="bg-black h-1 transition-all duration-300"
+                          className="bg-black dark:bg-white h-1 transition-all duration-300"
                           style={{ width: `${currentProgress}%` }}
                         />
                       </div>
                     </div>
                     
-                    <div className="text-sm font-light text-gray-600 space-y-1">
+                    <div className="text-sm font-light text-gray-600 dark:text-gray-400 space-y-1">
                       <div>Target: {formatTargetDate(goal.target_end_date)}</div>
                       <div className="text-xs">
                         Next check-in: {getReminderText(goal.next_reminder_date)}
                       </div>
                     </div>
 
-                    <div className="flex gap-2 pt-2 border-t border-gray-200">
+                    <div className="flex gap-2 pt-2 border-t border-gray-200 dark:border-gray-800">
                       <Link href={`/goals/${goal.id}/progress`} prefetch={true}>
                         <Button className="flex-1 text-xs py-1 w-full">
                           View Progress
@@ -407,7 +431,7 @@ export default function HomePage() {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t border-gray-200">
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <Link href="/add">
             <Button className="w-full">Add New Goal</Button>
           </Link>

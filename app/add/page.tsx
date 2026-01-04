@@ -79,11 +79,11 @@ export default function AddGoalPage() {
   const today = format(new Date(), 'yyyy-MM-dd');
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-2xl font-light text-black mb-2">New Goal</h1>
-          <p className="text-sm font-light text-gray-600">
+          <h1 className="text-2xl font-light text-black dark:text-white mb-2">New Goal</h1>
+          <p className="text-sm font-light text-gray-600 dark:text-gray-400">
             Define a long-term goal with a target completion date
           </p>
         </div>
@@ -99,7 +99,7 @@ export default function AddGoalPage() {
           />
 
           <div className="w-full">
-            <label className="block text-sm font-light text-gray-700 mb-1">
+            <label className="block text-sm font-light text-gray-700 dark:text-gray-300 mb-1">
               Description (optional)
             </label>
             <textarea
@@ -107,7 +107,7 @@ export default function AddGoalPage() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add a description..."
               rows={4}
-              className="w-full bg-transparent border-0 border-b border-gray-300 pb-2 pt-1 text-sm font-light text-black focus:outline-none focus:border-black transition-colors duration-200 resize-none"
+              className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200 resize-none"
             />
           </div>
 
@@ -121,7 +121,7 @@ export default function AddGoalPage() {
           />
 
           {error && (
-            <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2">
+            <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">
               {error}
             </div>
           )}

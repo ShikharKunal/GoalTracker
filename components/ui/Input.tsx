@@ -12,7 +12,7 @@ export default function Input({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-light text-gray-700 mb-1">
+        <label className="block text-sm font-light text-gray-700 dark:text-gray-300 mb-1">
           {label}
         </label>
       )}
@@ -23,13 +23,16 @@ export default function Input({
           border-0
           border-b
           border-gray-300
+          dark:border-gray-700
           pb-2
           pt-1
           text-sm
           font-light
           text-black
+          dark:text-white
           focus:outline-none
           focus:border-black
+          dark:focus:border-white
           transition-colors
           duration-200
           ${className}

@@ -82,13 +82,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-2xl font-light text-black mb-2">
+          <h1 className="text-2xl font-light text-black dark:text-white mb-2">
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </h1>
-          <p className="text-sm font-light text-gray-600">
+          <p className="text-sm font-light text-gray-600 dark:text-gray-400">
             {isSignUp 
               ? 'Create an account to start tracking your goals'
               : 'Sign in to view your goals'
@@ -119,13 +119,13 @@ export default function LoginPage() {
           />
 
           {error && (
-            <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2">
+            <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">
               {error}
             </div>
           )}
 
           {successMessage && (
-            <div className="text-sm text-black font-light border-l-2 border-gray-400 pl-3 py-2 bg-gray-50">
+            <div className="text-sm text-black dark:text-white font-light border-l-2 border-gray-400 dark:border-gray-600 pl-3 py-2 bg-gray-50 dark:bg-gray-900">
               {successMessage}
             </div>
           )}
@@ -148,7 +148,7 @@ export default function LoginPage() {
                 setIsSignUp(!isSignUp);
                 setError(null);
               }}
-              className="text-sm font-light text-gray-600 hover:text-black transition-colors"
+              className="text-sm font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
             >
               {isSignUp 
                 ? 'Already have an account? Sign in'

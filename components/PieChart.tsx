@@ -12,10 +12,10 @@ export default function PieChart({ active, completed, size = 100 }: PieChartProp
   if (total === 0) {
     return (
       <div 
-        className="flex items-center justify-center border border-gray-200 rounded-full"
+        className="flex items-center justify-center border border-gray-200 dark:border-gray-800 rounded-full"
         style={{ width: size, height: size }}
       >
-        <span className="text-xs font-light text-gray-400">No data</span>
+        <span className="text-xs font-light text-gray-400 dark:text-gray-600">No data</span>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export default function PieChart({ active, completed, size = 100 }: PieChartProp
 
   return (
     <div className="flex flex-col items-center space-y-2">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="dark:invert">
         <circle
           cx={center}
           cy={center}
@@ -87,12 +87,12 @@ export default function PieChart({ active, completed, size = 100 }: PieChartProp
       </svg>
       <div className="flex gap-3 text-xs font-light">
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-black"></div>
-          <span className="text-gray-600">{active}</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></div>
+          <span className="text-gray-600 dark:text-gray-400">{active}</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-gray-400"></div>
-          <span className="text-gray-600">{completed}</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+          <span className="text-gray-600 dark:text-gray-400">{completed}</span>
         </div>
       </div>
     </div>

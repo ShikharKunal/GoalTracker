@@ -99,17 +99,17 @@ export default function GoalProgressPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <p className="text-sm font-light text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+        <p className="text-sm font-light text-gray-600 dark:text-gray-400">Loading...</p>
       </div>
     );
   }
 
   if (!goal) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-black">
         <div className="max-w-md mx-auto px-6 py-12">
-          <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2 mb-8">
+          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
             Goal not found
           </div>
           <Button onClick={() => router.push('/')}>Back to Goals</Button>
@@ -122,23 +122,23 @@ export default function GoalProgressPage() {
   const currentProgress = latestLog?.percentage || 0;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-8">
           <button
             onClick={() => router.back()}
-            className="text-sm font-light text-gray-600 hover:text-black transition-colors mb-4"
+            className="text-sm font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors mb-4"
           >
             ← Back
           </button>
-          <h1 className="text-2xl font-light text-black mb-2">{goal.title}</h1>
-          <p className="text-sm font-light text-gray-600">
+          <h1 className="text-2xl font-light text-black dark:text-white mb-2">{goal.title}</h1>
+          <p className="text-sm font-light text-gray-600 dark:text-gray-400">
             Current Progress: {currentProgress}%
           </p>
         </div>
 
         {error && (
-          <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2 mb-4">
+          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-4">
             {error}
           </div>
         )}
@@ -186,21 +186,21 @@ export default function GoalProgressPage() {
 
             {logs.length > 0 && (
               <div className="mt-6">
-                <h2 className="text-lg font-light text-black mb-4">Progress History</h2>
+                <h2 className="text-lg font-light text-black dark:text-white mb-4">Progress History</h2>
                 {logs.map((log) => (
                   <Card key={log.id} className="mb-3">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="text-2xl font-light text-black">
+                          <span className="text-2xl font-light text-black dark:text-white">
                             {log.percentage}%
                           </span>
-                          <span className="text-xs font-light text-gray-600">
+                          <span className="text-xs font-light text-gray-600 dark:text-gray-400">
                             {format(new Date(log.logged_at), 'MMM d, yyyy')}
                           </span>
                         </div>
                         {log.notes && (
-                          <p className="text-sm font-light text-gray-600 mt-2">
+                          <p className="text-sm font-light text-gray-600 dark:text-gray-400 mt-2">
                             {log.notes}
                           </p>
                         )}
@@ -208,7 +208,7 @@ export default function GoalProgressPage() {
                       <div className="flex gap-2 ml-4">
                         <button
                           onClick={() => handleEdit(log)}
-                          className="text-xs font-light text-gray-600 hover:text-black transition-colors"
+                          className="text-xs font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                         >
                           Edit
                         </button>
@@ -282,11 +282,11 @@ function EditProgressForm({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-light text-black">Edit Progress</h3>
+      <h3 className="text-lg font-light text-black dark:text-white">Edit Progress</h3>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-light text-gray-700 mb-2">
+          <label className="block text-sm font-light text-gray-700 dark:text-gray-300 mb-2">
             Progress (%)
           </label>
           <input
@@ -296,7 +296,7 @@ function EditProgressForm({
             value={percentage}
             onChange={(e) => setPercentage(e.target.value)}
             required
-            className="w-full bg-transparent border-0 border-b border-gray-300 pb-2 pt-1 text-sm font-light text-black focus:outline-none focus:border-black transition-colors duration-200"
+            className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
           />
           <div className="mt-2">
             <input
@@ -323,7 +323,7 @@ function EditProgressForm({
         </div>
 
         {error && (
-          <div className="text-sm text-black font-light border-l-2 border-black pl-3 py-2">
+          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">
             {error}
           </div>
         )}
