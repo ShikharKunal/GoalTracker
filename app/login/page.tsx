@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -24,10 +24,17 @@ export default function LoginPage() {
 
     try {
       if (isSignUp) {
-        // Sign up
+        // Sign up with redirect URL
+        const redirectUrl = typeof window !== 'undefined' 
+          ? `${window.location.origin}/login?confirmed=true`
+          : undefined;
+        
         const { data, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            emailRedirectTo: redirectUrl,
+          },
         });
 
         if (signUpError) throw signUpError;
