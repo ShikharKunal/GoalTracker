@@ -296,7 +296,7 @@ function EditProgressForm({
             value={percentage}
             onChange={(e) => setPercentage(e.target.value)}
             required
-            className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+            className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200"
           />
           <div className="mt-2">
             <input
@@ -318,7 +318,7 @@ function EditProgressForm({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={3}
-            className="w-full bg-transparent border-0 border-b border-gray-300 pb-2 pt-1 text-sm font-light text-black focus:outline-none focus:border-black transition-colors duration-200 resize-none"
+            className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200 resize-none"
           />
         </div>
 

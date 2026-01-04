@@ -397,9 +397,9 @@ export default function HomePage() {
                         <span className="text-sm font-light text-gray-600 dark:text-gray-400">Progress</span>
                         <span className="text-sm font-light text-black dark:text-white">{currentProgress}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-800 h-1">
+                      <div className="w-full bg-gray-200 dark:bg-gray-800 h-2 border-2 border-black dark:border-white">
                         <div 
-                          className="bg-black dark:bg-white h-1 transition-all duration-300"
+                          className="bg-black dark:bg-white h-full transition-all duration-300 border-r-2 border-black dark:border-white"
                           style={{ width: `${currentProgress}%` }}
                         />
                       </div>
@@ -412,7 +412,7 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    <div className="flex gap-2 pt-2 border-t border-gray-200 dark:border-gray-800">
+                    <div className="flex gap-2 pt-2 border-t-2 border-black dark:border-white">
                       <Link href={`/goals/${goal.id}/progress`} prefetch={true}>
                         <Button className="flex-1 text-xs py-1 w-full">
                           View Progress
@@ -431,7 +431,7 @@ export default function HomePage() {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="mt-12 pt-8 border-t-2 border-black dark:border-white">
           <Link href="/add">
             <Button className="w-full">Add New Goal</Button>
           </Link>

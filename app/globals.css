@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
 
 :root {
   --background: #ffffff;
@@ -18,6 +18,9 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 html,
@@ -26,15 +29,70 @@ body {
   overflow-x: hidden;
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {
   min-height: 100vh;
+}
+
+/* Pixelated look for UI elements */
+button, input, textarea, select {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Subtle 3D effect for cards and buttons */
+.card-3d {
+  box-shadow: 
+    2px 2px 0px 0px rgba(0, 0, 0, 0.1),
+    4px 4px 0px 0px rgba(0, 0, 0, 0.05);
+  border: 2px solid;
+  transform: translateZ(0);
+}
+
+.dark .card-3d {
+  box-shadow: 
+    2px 2px 0px 0px rgba(255, 255, 255, 0.1),
+    4px 4px 0px 0px rgba(255, 255, 255, 0.05);
+}
+
+.button-3d {
+  box-shadow: 
+    2px 2px 0px 0px rgba(0, 0, 0, 0.2),
+    4px 4px 0px 0px rgba(0, 0, 0, 0.1);
+  border: 2px solid;
+  transform: translateZ(0);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.button-3d:active {
+  transform: translate(2px, 2px);
+  box-shadow: 
+    1px 1px 0px 0px rgba(0, 0, 0, 0.2),
+    2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+.dark .button-3d {
+  box-shadow: 
+    2px 2px 0px 0px rgba(255, 255, 255, 0.2),
+    4px 4px 0px 0px rgba(255, 255, 255, 0.1);
+}
+
+.dark .button-3d:active {
+  box-shadow: 
+    1px 1px 0px 0px rgba(255, 255, 255, 0.2),
+    2px 2px 0px 0px rgba(255, 255, 255, 0.1);
 }
 
 a {

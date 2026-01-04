@@ -206,7 +206,7 @@ export default function CompletedGoalsPage() {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="mt-12 pt-8 border-t-2 border-black dark:border-white">
           <Link href="/">
             <Button className="w-full">Back to Active Goals</Button>
           </Link>

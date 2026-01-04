@@ -168,7 +168,7 @@ export default function EditGoalPage() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add a description..."
               rows={4}
-              className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200 resize-none"
+              className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200 resize-none"
             />
           </div>
 
@@ -191,7 +191,7 @@ export default function EditGoalPage() {
               value={reminderIntervalDays}
               onChange={(e) => setReminderIntervalDays(e.target.value)}
               placeholder="Leave empty for automatic (based on goal duration)"
-              className="w-full bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+              className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200"
             />
             <p className="text-xs font-light text-gray-500 dark:text-gray-500 mt-1">
               Default: 3 days (short-term), 7 days (medium), 14 days (long-term)

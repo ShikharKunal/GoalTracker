@@ -19,10 +19,10 @@ export default function ProgressGraph({
   if (logs.length === 0) {
     return (
       <div 
-        className="border border-gray-200 flex items-center justify-center"
+        className="border-2 border-black dark:border-white bg-white dark:bg-black flex items-center justify-center"
         style={{ height }}
       >
-        <span className="text-xs font-light text-gray-400">No progress logged yet</span>
+        <span className="text-xs font-light text-gray-400 dark:text-gray-600">No progress logged yet</span>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function ProgressGraph({
 
   return (
     <div className="space-y-2">
-      <svg width={width} height={height} className="border border-gray-200">
+      <svg width={width} height={height} className="border-2 border-black dark:border-white bg-white dark:bg-black">
         {/* Grid lines */}
         {[0, 25, 50, 75, 100].map((percent) => {
           const y = padding + chartHeight - (percent / maxPercentage) * chartHeight;
@@ -115,7 +115,7 @@ export default function ProgressGraph({
             x={point.x}
             y={point.y - 8}
             textAnchor="middle"
-            className="text-[8px] font-light fill-black"
+            className="text-[8px] font-light fill-black dark:fill-white"
           >
             {point.percentage}%
           </text>
@@ -123,7 +123,7 @@ export default function ProgressGraph({
       </svg>
 
       {/* Date range */}
-      <div className="flex justify-between text-xs font-light text-gray-600">
+      <div className="flex justify-between text-xs font-light text-gray-600 dark:text-gray-400">
         <span>{format(new Date(goalStartDate), 'MMM d')}</span>
         <span>{format(new Date(goalEndDate), 'MMM d')}</span>
       </div>

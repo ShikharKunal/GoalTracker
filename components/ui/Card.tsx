@@ -9,17 +9,18 @@ export default function Card({ children, className = '' }: CardProps) {
   return (
     <div
       className={`
-        border
-        border-gray-200
-        dark:border-gray-800
+        card-3d
+        border-2
+        border-black
+        dark:border-white
         bg-white
         dark:bg-black
         p-6
         mb-4
-        transition-colors
+        transition-all
         duration-200
-        hover:border-gray-300
-        dark:hover:border-gray-700
+        hover:border-gray-400
+        dark:hover:border-gray-600
         ${className}
       `}
     >

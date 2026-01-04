@@ -21,9 +21,9 @@ export default function Input({
           w-full
           bg-transparent
           border-0
-          border-b
-          border-gray-300
-          dark:border-gray-700
+          border-b-2
+          border-black
+          dark:border-white
           pb-2
           pt-1
           text-sm
@@ -31,8 +31,8 @@ export default function Input({
           text-black
           dark:text-white
           focus:outline-none
-          focus:border-black
-          dark:focus:border-white
+          focus:border-gray-400
+          dark:focus:border-gray-600
           transition-colors
           duration-200
           ${className}
