@@ -60,7 +60,7 @@ export default function AddGoalPage() {
           target_end_date: endDate.toISOString(),
           next_reminder_date: nextReminderDate.toISOString(),
           is_active: true,
-        });
+        } as any);
 
       if (insertError) {
         throw insertError;

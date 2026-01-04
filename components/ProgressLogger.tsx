@@ -42,7 +42,7 @@ export default function ProgressLogger({ goalId, onProgressLogged, onClose }: Pr
           percentage: percent,
           notes: notes.trim() || null,
           logged_at: new Date().toISOString(),
-        });
+        } as any);
 
       if (insertError) throw insertError;
 

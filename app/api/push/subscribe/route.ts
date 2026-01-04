@@ -29,17 +29,17 @@ export async function POST(request: NextRequest) {
 
     const subscription = await request.json();
 
-    // Store subscription in Supabase
-    const { error } = await supabase
-      .from('push_subscriptions')
-      .upsert({
-        user_id: user.id,
-        subscription: subscription,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }, {
-        onConflict: 'user_id'
-      });
+      // Store subscription in Supabase
+      const { error } = await supabase
+        .from('push_subscriptions')
+        .upsert({
+          user_id: user.id,
+          subscription: subscription,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        } as any, {
+          onConflict: 'user_id'
+        });
 
     if (error) {
       throw error;
