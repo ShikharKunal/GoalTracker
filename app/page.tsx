@@ -271,9 +271,9 @@ export default function HomePage() {
 
   if (error && error.includes('logged in')) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
         <div className="max-w-md mx-auto px-6 py-12">
-          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
+          <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2 mb-8">
             {error}
           </div>
           <Link href="/login">
@@ -286,9 +286,9 @@ export default function HomePage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
         <div className="max-w-md mx-auto px-6 py-12">
-          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
+          <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2 mb-8">
             {error}
           </div>
           <Button onClick={fetchGoals}>Retry</Button>
@@ -298,12 +298,12 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-2xl font-light text-black dark:text-white mb-2">Goals</h1>
+              <h1 className="text-2xl font-light text-[#2a2a2a] dark:text-[#e5e5e5] mb-2">Goals</h1>
               <p className="text-sm font-light text-gray-600 dark:text-gray-400">
                 {goals.length === 0 
                   ? 'No active goals yet' 
@@ -356,7 +356,7 @@ export default function HomePage() {
                 <Card key={goal.id}>
                   <div className="space-y-3">
                     <div className="flex justify-between items-start">
-                      <h2 className="text-lg font-light text-black dark:text-white flex-1">
+                      <h2 className="text-lg font-light text-[#2a2a2a] dark:text-[#e5e5e5] flex-1">
                         {goal.title}
                       </h2>
                       <div className="flex gap-2 ml-4">
@@ -395,11 +395,11 @@ export default function HomePage() {
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
                         <span className="text-sm font-light text-gray-600 dark:text-gray-400">Progress</span>
-                        <span className="text-sm font-light text-black dark:text-white">{currentProgress}%</span>
+                        <span className="text-sm font-light text-[#2a2a2a] dark:text-[#e5e5e5]">{currentProgress}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-800 h-2 border-2 border-black dark:border-white">
+                      <div className="w-full bg-gray-200 dark:bg-[#3a3a3a] h-2 border-2 border-[#6a6a6a] dark:border-[#6a6a6a]">
                         <div 
-                          className="bg-black dark:bg-white h-full transition-all duration-300 border-r-2 border-black dark:border-white"
+                          className="bg-[#6a6a6a] dark:bg-[#8a8a8a] h-full transition-all duration-300 border-r-2 border-[#6a6a6a] dark:border-[#6a6a6a]"
                           style={{ width: `${currentProgress}%` }}
                         />
                       </div>
@@ -412,7 +412,7 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    <div className="flex gap-2 pt-2 border-t-2 border-black dark:border-white">
+                    <div className="flex gap-2 pt-2 border-t-2 border-[#6a6a6a] dark:border-[#6a6a6a]">
                       <Link href={`/goals/${goal.id}/progress`} prefetch={true}>
                         <Button className="flex-1 text-xs py-1 w-full">
                           View Progress
@@ -431,7 +431,7 @@ export default function HomePage() {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t-2 border-black dark:border-white">
+        <div className="mt-12 pt-8 border-t-2 border-[#6a6a6a] dark:border-[#6a6a6a]">
           <Link href="/add">
             <Button className="w-full">Add New Goal</Button>
           </Link>

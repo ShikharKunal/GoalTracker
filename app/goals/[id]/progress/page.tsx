@@ -107,7 +107,7 @@ export default function GoalProgressPage() {
 
   if (!goal) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
         <div className="max-w-md mx-auto px-6 py-12">
           <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
             Goal not found
@@ -122,7 +122,7 @@ export default function GoalProgressPage() {
   const currentProgress = latestLog?.percentage || 0;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-8">
           <button
@@ -131,14 +131,14 @@ export default function GoalProgressPage() {
           >
             ← Back
           </button>
-          <h1 className="text-2xl font-light text-black dark:text-white mb-2">{goal.title}</h1>
+          <h1 className="text-2xl font-light text-[#2a2a2a] dark:text-[#e5e5e5] mb-2">{goal.title}</h1>
           <p className="text-sm font-light text-gray-600 dark:text-gray-400">
             Current Progress: {currentProgress}%
           </p>
         </div>
 
         {error && (
-          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-4">
+          <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2 mb-4">
             {error}
           </div>
         )}
@@ -186,13 +186,13 @@ export default function GoalProgressPage() {
 
             {logs.length > 0 && (
               <div className="mt-6">
-                <h2 className="text-lg font-light text-black dark:text-white mb-4">Progress History</h2>
+                <h2 className="text-lg font-light text-[#2a2a2a] dark:text-[#e5e5e5] mb-4">Progress History</h2>
                 {logs.map((log) => (
                   <Card key={log.id} className="mb-3">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="text-2xl font-light text-black dark:text-white">
+                          <span className="text-2xl font-light text-[#2a2a2a] dark:text-[#e5e5e5]">
                             {log.percentage}%
                           </span>
                           <span className="text-xs font-light text-gray-600 dark:text-gray-400">
@@ -282,7 +282,7 @@ function EditProgressForm({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-light text-black dark:text-white">Edit Progress</h3>
+      <h3 className="text-lg font-light text-[#2a2a2a] dark:text-[#e5e5e5]">Edit Progress</h3>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -296,7 +296,7 @@ function EditProgressForm({
             value={percentage}
             onChange={(e) => setPercentage(e.target.value)}
             required
-            className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200"
+            className="w-full bg-transparent border-0 border-b-2 border-[#6a6a6a] dark:border-[#6a6a6a] pb-2 pt-1 text-sm font-light text-[#2a2a2a] dark:text-[#e5e5e5] focus:outline-none focus:border-[#4a4a4a] dark:focus:border-[#8a8a8a] transition-colors duration-200"
           />
           <div className="mt-2">
             <input
@@ -318,12 +318,12 @@ function EditProgressForm({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={3}
-            className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200 resize-none"
+            className="w-full bg-transparent border-0 border-b-2 border-[#6a6a6a] dark:border-[#6a6a6a] pb-2 pt-1 text-sm font-light text-[#2a2a2a] dark:text-[#e5e5e5] focus:outline-none focus:border-[#4a4a4a] dark:focus:border-[#8a8a8a] transition-colors duration-200 resize-none"
           />
         </div>
 
         {error && (
-          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">
+          <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2">
             {error}
           </div>
         )}

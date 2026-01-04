@@ -5,13 +5,17 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: #fafafa;
+  --foreground: #2a2a2a;
+  --border: #6a6a6a;
+  --border-light: #d0d0d0;
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #1a1a1a;
+  --foreground: #e5e5e5;
+  --border: #6a6a6a;
+  --border-light: #3a3a3a;
 }
 
 * {
@@ -42,6 +46,14 @@ body {
 }
 
 body {
+  background-color: #fafafa;
+}
+
+.dark body {
+  background-color: #1a1a1a;
+}
+
+body {
   min-height: 100vh;
 }
 
@@ -55,44 +67,46 @@ button, input, textarea, select {
 /* Subtle 3D effect for cards and buttons */
 .card-3d {
   box-shadow: 
-    2px 2px 0px 0px rgba(0, 0, 0, 0.1),
-    4px 4px 0px 0px rgba(0, 0, 0, 0.05);
-  border: 2px solid;
+    2px 2px 0px 0px rgba(106, 106, 106, 0.12),
+    4px 4px 0px 0px rgba(106, 106, 106, 0.06);
+  border: 2px solid var(--border);
   transform: translateZ(0);
+  background-color: #ffffff;
 }
 
 .dark .card-3d {
   box-shadow: 
-    2px 2px 0px 0px rgba(255, 255, 255, 0.1),
-    4px 4px 0px 0px rgba(255, 255, 255, 0.05);
+    2px 2px 0px 0px rgba(106, 106, 106, 0.2),
+    4px 4px 0px 0px rgba(106, 106, 106, 0.1);
 }
 
 .button-3d {
   box-shadow: 
-    2px 2px 0px 0px rgba(0, 0, 0, 0.2),
-    4px 4px 0px 0px rgba(0, 0, 0, 0.1);
-  border: 2px solid;
+    2px 2px 0px 0px rgba(106, 106, 106, 0.2),
+    4px 4px 0px 0px rgba(106, 106, 106, 0.1);
+  border: 2px solid var(--border);
   transform: translateZ(0);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
+  background-color: #ffffff;
 }
 
 .button-3d:active {
   transform: translate(2px, 2px);
   box-shadow: 
-    1px 1px 0px 0px rgba(0, 0, 0, 0.2),
-    2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+    1px 1px 0px 0px rgba(106, 106, 106, 0.2),
+    2px 2px 0px 0px rgba(106, 106, 106, 0.1);
 }
 
 .dark .button-3d {
   box-shadow: 
-    2px 2px 0px 0px rgba(255, 255, 255, 0.2),
-    4px 4px 0px 0px rgba(255, 255, 255, 0.1);
+    2px 2px 0px 0px rgba(106, 106, 106, 0.3),
+    4px 4px 0px 0px rgba(106, 106, 106, 0.15);
 }
 
 .dark .button-3d:active {
   box-shadow: 
-    1px 1px 0px 0px rgba(255, 255, 255, 0.2),
-    2px 2px 0px 0px rgba(255, 255, 255, 0.1);
+    1px 1px 0px 0px rgba(106, 106, 106, 0.3),
+    2px 2px 0px 0px rgba(106, 106, 106, 0.15);
 }
 
 a {

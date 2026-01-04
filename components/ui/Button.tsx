@@ -14,8 +14,8 @@ export default function Button({
   const baseClasses = 'button-3d px-6 py-2 text-sm font-light';
   
   const variantClasses = variant === 'default' 
-    ? 'border-2 border-black dark:border-white bg-white dark:bg-black text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black'
-    : 'border-2 border-black dark:border-white bg-white dark:bg-black text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black';
+    ? 'border-2 bg-white dark:bg-[#1a1a1a] text-[#2a2a2a] dark:text-[#e5e5e5] hover:bg-[#f8f8f8] dark:hover:bg-[#2a2a2a]'
+    : 'border-2 bg-white dark:bg-[#1a1a1a] text-[#2a2a2a] dark:text-[#e5e5e5] hover:bg-[#f8f8f8] dark:hover:bg-[#2a2a2a]';
   
   return (
     <button

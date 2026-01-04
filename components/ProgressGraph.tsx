@@ -19,10 +19,10 @@ export default function ProgressGraph({
   if (logs.length === 0) {
     return (
       <div 
-        className="border-2 border-black dark:border-white bg-white dark:bg-black flex items-center justify-center"
+        className="border-2 border-[#6a6a6a] dark:border-[#6a6a6a] bg-white dark:bg-[#1a1a1a] flex items-center justify-center"
         style={{ height }}
       >
-        <span className="text-xs font-light text-gray-400 dark:text-gray-600">No progress logged yet</span>
+        <span className="text-xs font-light text-[#6a6a6a] dark:text-[#8a8a8a]">No progress logged yet</span>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function ProgressGraph({
 
   return (
     <div className="space-y-2">
-      <svg width={width} height={height} className="border-2 border-black dark:border-white bg-white dark:bg-black">
+      <svg width={width} height={height} className="border-2 border-[#6a6a6a] dark:border-[#6a6a6a] bg-white dark:bg-[#1a1a1a]">
         {/* Grid lines */}
         {[0, 25, 50, 75, 100].map((percent) => {
           const y = padding + chartHeight - (percent / maxPercentage) * chartHeight;

@@ -11,16 +11,14 @@ export default function Card({ children, className = '' }: CardProps) {
       className={`
         card-3d
         border-2
-        border-black
-        dark:border-white
         bg-white
-        dark:bg-black
+        dark:bg-[#1a1a1a]
         p-6
         mb-4
         transition-all
         duration-200
-        hover:border-gray-400
-        dark:hover:border-gray-600
+        hover:shadow-[3px_3px_0px_0px_rgba(106,106,106,0.15),6px_6px_0px_0px_rgba(106,106,106,0.08)]
+        dark:hover:shadow-[3px_3px_0px_0px_rgba(106,106,106,0.25),6px_6px_0px_0px_rgba(106,106,106,0.12)]
         ${className}
       `}
     >

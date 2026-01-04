@@ -109,9 +109,9 @@ export default function CompletedGoalsPage() {
 
   if (error && error.includes('logged in')) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
         <div className="max-w-md mx-auto px-6 py-12">
-          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
+          <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2 mb-8">
             {error}
           </div>
           <Link href="/login">
@@ -123,12 +123,12 @@ export default function CompletedGoalsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-light text-black dark:text-white mb-2">Completed Goals</h1>
+              <h1 className="text-2xl font-light text-[#2a2a2a] dark:text-[#e5e5e5] mb-2">Completed Goals</h1>
               <p className="text-sm font-light text-gray-600 dark:text-gray-400">
                 {goals.length === 0 
                   ? 'No completed goals yet' 
@@ -145,7 +145,7 @@ export default function CompletedGoalsPage() {
         </div>
 
         {error && !error.includes('logged in') && (
-          <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2 mb-8">
+          <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2 mb-8">
             {error}
           </div>
         )}
@@ -165,7 +165,7 @@ export default function CompletedGoalsPage() {
               <Card key={goal.id}>
                 <div className="space-y-3">
                   <div className="flex justify-between items-start">
-                    <h2 className="text-lg font-light text-black dark:text-white flex-1">
+                    <h2 className="text-lg font-light text-[#2a2a2a] dark:text-[#e5e5e5] flex-1">
                       {goal.title}
                     </h2>
                     <div className="flex gap-2 ml-4">
@@ -206,7 +206,7 @@ export default function CompletedGoalsPage() {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t-2 border-black dark:border-white">
+        <div className="mt-12 pt-8 border-t-2 border-[#6a6a6a] dark:border-[#6a6a6a]">
           <Link href="/">
             <Button className="w-full">Back to Active Goals</Button>
           </Link>

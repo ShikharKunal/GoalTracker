@@ -82,10 +82,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-2xl font-light text-black dark:text-white mb-2">
+          <h1 className="text-2xl font-light text-[#2a2a2a] dark:text-[#e5e5e5] mb-2">
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </h1>
           <p className="text-sm font-light text-gray-600 dark:text-gray-400">
@@ -119,13 +119,13 @@ export default function LoginPage() {
           />
 
           {error && (
-            <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">
+            <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2">
               {error}
             </div>
           )}
 
           {successMessage && (
-            <div className="text-sm text-black dark:text-white font-light border-l-2 border-gray-400 dark:border-gray-600 pl-3 py-2 bg-gray-50 dark:bg-gray-900">
+            <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#8a8a8a] pl-3 py-2 bg-gray-50 dark:bg-[#2a2a2a]">
               {successMessage}
             </div>
           )}

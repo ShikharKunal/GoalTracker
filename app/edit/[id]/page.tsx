@@ -140,10 +140,10 @@ export default function EditGoalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-2xl font-light text-black dark:text-white mb-2">Edit Goal</h1>
+          <h1 className="text-2xl font-light text-[#2a2a2a] dark:text-[#e5e5e5] mb-2">Edit Goal</h1>
           <p className="text-sm font-light text-gray-600 dark:text-gray-400">
             Update your goal details
           </p>
@@ -168,7 +168,7 @@ export default function EditGoalPage() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add a description..."
               rows={4}
-              className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200 resize-none"
+              className="w-full bg-transparent border-0 border-b-2 border-[#6a6a6a] dark:border-[#6a6a6a] pb-2 pt-1 text-sm font-light text-[#2a2a2a] dark:text-[#e5e5e5] focus:outline-none focus:border-[#4a4a4a] dark:focus:border-[#8a8a8a] transition-colors duration-200 resize-none"
             />
           </div>
 
@@ -191,7 +191,7 @@ export default function EditGoalPage() {
               value={reminderIntervalDays}
               onChange={(e) => setReminderIntervalDays(e.target.value)}
               placeholder="Leave empty for automatic (based on goal duration)"
-              className="w-full bg-transparent border-0 border-b-2 border-black dark:border-white pb-2 pt-1 text-sm font-light text-black dark:text-white focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 transition-colors duration-200"
+              className="w-full bg-transparent border-0 border-b-2 border-[#6a6a6a] dark:border-[#6a6a6a] pb-2 pt-1 text-sm font-light text-[#2a2a2a] dark:text-[#e5e5e5] focus:outline-none focus:border-[#4a4a4a] dark:focus:border-[#8a8a8a] transition-colors duration-200"
             />
             <p className="text-xs font-light text-gray-500 dark:text-gray-500 mt-1">
               Default: 3 days (short-term), 7 days (medium), 14 days (long-term)
@@ -199,7 +199,7 @@ export default function EditGoalPage() {
           </div>
 
           {error && (
-            <div className="text-sm text-black dark:text-white font-light border-l-2 border-black dark:border-white pl-3 py-2">
+            <div className="text-sm text-[#2a2a2a] dark:text-[#e5e5e5] font-light border-l-2 border-[#6a6a6a] dark:border-[#6a6a6a] pl-3 py-2">
               {error}
             </div>
           )}
